@@ -1,0 +1,12 @@
+2022-07-02
+- Refactor component type definitions into individual files
+- Make type definitions private; create public factory methods to return new instances with appropariate default values and derived properties
+- Create medthods for each derived property
+  - Operate on pointer to type
+  - Minor diameter, pitch diameter
+    - Based on internal vs external thread
+  - Area
+    - Shank area based on nominal diameter
+    - Tensile area based on minor diameter
+  - ThreadShearArea
+    - (maybe) type switch to change calc based on internal/external thread
