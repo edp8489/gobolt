@@ -1,12 +1,28 @@
 2022-07-02
 - Refactor component type definitions into individual files
-- Make type definitions private; create public factory methods to return new instances with appropariate default values and derived properties
-- Create medthods for each derived property
+- Make type definitions private; create public factory methods to return new instances with appropriate default values and derived properties
+- Map of allowable diameter-pitch combinations (JSON data file?)
+- Create methods for each derived property
   - Operate on pointer to type
   - Minor diameter, pitch diameter
-    - Based on internal vs external thread
+    - Metric: Shigley, table 8-1 footnote
+    - Imperial: Shigley Table 8-2 footnote
   - Area
+    - FED-STD-H28/2B, Table II.B.1, eq 1(a), 1(b)
     - Shank area based on nominal diameter
-    - Tensile area based on minor diameter
-  - ThreadShearArea
+    - Tensile area at midpoint between pitch and minor diameter
+  - Thread Shear Area
     - (maybe) type switch to change calc based on internal/external thread
+    - Internal: FED-STD-H28/2B, Table II.B.1, eq 2
+    - External: FED-STD-H28/2B, Table II.B.1, eq 4
+- Package for margin calc functions
+  - Fastener
+    - Shear margin
+    - Tension margin
+    - Bending margin
+    - Shear-Tension interaction
+    - Shear-Tension-Bending interaction
+    - Thread shear margin
+  - Joint members
+    - Bearing margin
+  - Preload analysis
