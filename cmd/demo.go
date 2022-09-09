@@ -1,16 +1,18 @@
 /*
-Gobolt is a CLI bolted joint strength calculator
+Copyright © 2022 NAME HERE <EMAIL ADDRESS>
+
 */
-package main
+package cmd
 
 import (
 	"fmt"
 
 	"github.com/edp8489/gobolt/internal/pkg/output"
 	"github.com/edp8489/gobolt/internal/pkg/types"
+	"github.com/spf13/cobra"
 )
 
-func main() {
+func Demo() {
 	fmt.Println("Welcome to gobolt!")
 
 	// define loads for MVP program
@@ -48,4 +50,28 @@ func main() {
 	// @todo refactor into utility package
 	Psu_b := bolt.Fsu * Ashank
 	fmt.Printf("Bolt ultimate shear strength = %.0f [lbf]\n", Psu_b)
+}
+
+// demoCmd represents the demo command
+var demoCmd = &cobra.Command{
+	Use:   "demo",
+	Short: "Runs a demo solve",
+	Long:  `Long description TBD`,
+	Run: func(cmd *cobra.Command, args []string) {
+		Demo()
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(demoCmd)
+
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// demoCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// demoCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
