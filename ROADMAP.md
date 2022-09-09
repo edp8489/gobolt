@@ -5,7 +5,37 @@
   - Launching with no commands defaults to a welcome screen asking to pick batch/interactive
   - Setting to track units (inch/metric)
   - All selections print a basic debug message to console
-2. CLI development
+2. Model development
+  - Type definition
+    - Bolt
+    - Joint
+    - Member
+    - Nut (or nut-like for tapped holes or inserts)
+    - Material
+    - MaterialDB
+    - Thread
+  - Helper functions
+    - Bolt geometry
+      - Thread geom
+      - Areas
+      - Stiffness
+    - Joint
+      - Stiffness
+        - NASA Config 1
+        - NASA Config 3
+        - NASA Config 2
+        - NASA Config 4
+    - Preload calcs
+    - Margin calcs
+      - Bolt tension
+      - Bolt shear
+      - Bolt shear-tension interaction
+      - Joint separation
+      - Joint member bearing
+3. Demo development
+  - Used for model validation
+  - Come up with contrived example for protruding head 1/4-28 Ti bolt in .125 Al 7075 members
+4. CLI development
   1. Batch mode Palette
     - Takes path to an input file
     - Unmarshals inputs into respective structs
@@ -14,29 +44,71 @@
     - Option to save to output file
   2. Interactive mode Palette
     - Walks user through defining each input required for a joint
-    - Command: Unit selection (imperial or metric)
+    - promptui package for inputs and validation
+    - Prompt: Unit selection
+      - imperial or metric
+      - Store to global session config
+      - Use as switch to guide prompt labels for unit-consistent inputs
     - Palette: Joint definition
-      - Command: Configuration
-      - Number of members
+      - Select: Configuration
+        - NASA TM 106943 cfgs 1-4
+      - Prompt: Number of members
+        - Default value: 2
         - Create joint Type with proper array size
       - Member property definition loop
-3. Model development
-  - Type definition
-    - Bolt
-    - Joint
-    - Member
-  - Helper functions
-    - Bolt geometry
-      - Thread geom
-      - Areas
-      - Stiffness
-    - Joint
-      - Member stiffness
-    - Preload calcs
-    - Margin calcs
-      - Bolt tension
-      - Bolt shear
-      - Bolt shear-tension interaction
-      - Joint separation
-      - Joint member bearing
+        - Prompt: Thickness
+        - Prompt: edge distance
+        - Prompt: Material properties
+          - Option 1: Manual input
+            - Prompt: Name
+            - Prompt: Modulus of elasticity
+            - Prompt: Fbry (e/D = 1.5)
+            - Prompt: Fbry (e/D = 2.0)
+            - Prompt: Fbru (e/D = 1.5)
+            - Prompt: Fbru (e/D = 2)
+          - Option 2: Select from database
+            - Material props database implementation TBD
+            - Store session materials in selectable Type
+      - Bolt property definition loop
+        - Prompt: Diameter
+        - Prompt: Thread
+        - Prompt: Material
+          - Option 1: Manual Input
+            - Prompt: Name
+            - Prompt: Modulus of elasticity
+            - Prompt: Ftu
+            - Prompt: Fty
+            - Prompt: Fsu
+            - Prompt: Does bolt style have a reduced strength head?
+              - Option Y/N
+              - N -> Ptu = At*Ftu
+              - Y -> Prompt: Ptu
+              - Y -> Estimate Pty = (Fty/Ftu)*Ptu
+          - Option 2: Select from database
+            - Material props database implementation TBD
+            - Store session materials in selectable Type
+      - Nut property definition loop
+        - Prompt: Name
+        - Select: Type
+          - Tension
+          - Shear
+          - Internal locking
+        - TBD logic selection-based property definition
+      - Loads definition loop
+        - Prompt: Nominal preload
+        - Prompt: Preload tolerance
+        - Select: Lubrication factor
+          - Nut factor values from Shigley table
+        - Select: Preload application method
+          - Torque wrench
+          - Other options from NASA-STD-5020 table
+        - Safety factor definition
+          - Prompt: Ult safety factor
+          - Prompt: Yld safety factor
+          - Select: Separation criticality
+            - Options reflect flowchart from NASA STD 5020
+        - Loads definition
+          - Prompt: External tension load
+          - Prompt: Shear load
+
     

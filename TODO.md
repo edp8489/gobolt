@@ -1,7 +1,7 @@
 2022-07-02
 - Refactor component type definitions into individual files
 - Make type definitions private; create public factory methods to return new instances with appropriate default values and derived properties
-- Map of allowable diameter-pitch combinations (JSON data file?)
+- Database of allowable diameter-pitch combinations (JSON data file?)
 - Create methods for each derived property
   - Operate on pointer to type
   - Minor diameter, pitch diameter
