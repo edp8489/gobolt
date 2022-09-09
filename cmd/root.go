@@ -19,13 +19,12 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "gobolt",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "A bolted joint strength calculator",
+	Long: `goBolt is a bolted joint strength calculator.
+This application can be run two ways:
+    1. Batch mode to solve predefined input file(s)
+    2. Interactive mode that walks the user through
+       all aspects of property definition.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
