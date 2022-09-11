@@ -5,6 +5,7 @@
   - Launching with no commands defaults to a welcome screen asking to pick batch/interactive
   - Setting to track units (inch/metric)
   - All selections print a basic debug message to console
+  - Utils palette for misc functions
 2. Model development
   - Type definition
     - Bolt
@@ -34,7 +35,7 @@
       - Joint member bearing
 3. Demo development
   - Used for model validation
-  - Come up with contrived example for protruding head 1/4-28 Ti bolt in .125 Al 7075 members
+  - Come up with example for protruding head 1/4-28 Ti bolt in .125 Al 7075 members
 4. CLI development
   1. Batch mode Palette
     - Takes path to an input file
@@ -110,5 +111,12 @@
         - Loads definition
           - Prompt: External tension load
           - Prompt: Shear load
+  3. Util palette
+    - Bolt shear stiffness calculators
+      - Huth
+      - Swift
+      - Grumman
+      - Nelson
+    - Add material to database
 
     
