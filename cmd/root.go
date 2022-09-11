@@ -9,6 +9,7 @@ import (
 	"os"
 
 	"github.com/edp8489/gobolt/cmd/interactive"
+	"github.com/edp8489/gobolt/cmd/utils"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -41,6 +42,7 @@ func Execute() {
 
 func addSubcommandPalettes() {
 	rootCmd.AddCommand(interactive.InteractiveCmd)
+	rootCmd.AddCommand(utils.UtilsCmd)
 }
 
 func init() {
