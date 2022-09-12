@@ -14,6 +14,9 @@
     - Nut (or nut-like for tapped holes or inserts)
     - Material
     - MaterialDB
+      - Table containing material properties
+      - Table containing bolt thread definition
+      - Table containing nut/insert thread definition
     - Thread
   - Helper functions
     - Bolt geometry
@@ -33,6 +36,10 @@
       - Bolt shear-tension interaction
       - Joint separation
       - Joint member bearing
+    - DB utils
+      - Insert material to table
+      - Insert bolt to table
+      - Query table 
 3. Demo development
   - Used for model validation
   - Come up with example for protruding head 1/4-28 Ti bolt in .125 Al 7075 members
@@ -118,5 +125,6 @@
       - Grumman
       - Nelson
     - Add material to database
+    - Add bolt to database
 
     
