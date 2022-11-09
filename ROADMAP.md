@@ -44,13 +44,13 @@
   - Used for model validation
   - Come up with example for protruding head 1/4-28 Ti bolt in .125 Al 7075 members
 4. CLI development
-  1. Batch mode Palette
+  - Batch mode Palette
     - Takes path to an input file
     - Unmarshals inputs into respective structs
     - Runs calculations
     - Prints results to console
     - Option to save to output file
-  2. Interactive mode Palette
+  - Interactive mode Palette
     - Walks user through defining each input required for a joint
     - promptui package for inputs and validation
     - Prompt: Unit selection
@@ -118,7 +118,7 @@
         - Loads definition
           - Prompt: External tension load
           - Prompt: Shear load
-  3. Util palette
+  - Util palette
     - Bolt shear stiffness calculators
       - Huth
       - Swift

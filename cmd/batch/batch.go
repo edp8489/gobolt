@@ -2,7 +2,7 @@
 Copyright © 2022 Eric Peters <ericdpeters@gmail.com>
 
 */
-package cmd
+package batch
 
 import (
 	"fmt"
@@ -11,18 +11,17 @@ import (
 )
 
 // batchCmd represents the batch command
-var batchCmd = &cobra.Command{
+var BatchCmd = &cobra.Command{
 	Use:   "batch",
 	Short: "Run in batch mode for predefined input file(s)",
 	Long: `Given a path to an input file, or a directory with multiple
 	input files, will solve and write outputs to file(s).`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("batch called")
+		fmt.Println("Sorry, batch mode still under development")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(batchCmd)
 
 	// Here you will define your flags and configuration settings.
 

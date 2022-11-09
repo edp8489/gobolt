@@ -28,8 +28,8 @@ func Demo() {
 
 	// declare joint parameters for MVP program
 	bolt := types.Bolt{
-		D:   0.250,
-		Fsu: 95e3,
+		DIA_MAJ: 0.250,
+		Fsu:     95e3,
 	}
 	output.PrintBolt(bolt)
 	//var Fbru2d = 120e3 // sheet ult bearing strength, [psi]
@@ -37,8 +37,8 @@ func Demo() {
 
 	// calculate bolt shear area (shank)
 	// @todo refactor into utility package
-	Ashank := types.Area(bolt.D)
-	fmt.Printf("Bolt shank area: %.4f [in^2] (D = %.3f [in]\n", Ashank, bolt.D)
+	Ashank := types.Area(bolt.DIA_MAJ)
+	fmt.Printf("Bolt shank area: %.4f [in^2] (D = %.3f [in]\n", Ashank, bolt.DIA_MAJ)
 
 	// calculate bolt tensile area
 	// @todo

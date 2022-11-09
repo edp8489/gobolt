@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/edp8489/gobolt/cmd/interactive"
 	"github.com/edp8489/gobolt/cmd/utils"
 
 	"github.com/spf13/cobra"
@@ -21,14 +20,19 @@ var cfgFile string
 var rootCmd = &cobra.Command{
 	Use:   "gobolt",
 	Short: "A bolted joint strength calculator",
-	Long: `goBolt is a bolted joint strength calculator.
-This application can be run two ways:
-    1. Batch mode to solve predefined input file(s)
-    2. Interactive mode that walks the user through
-       all aspects of property definition.`,
+	Long: `
+goBolt is a bolted joint strength calculator.
+
+This application can be run several ways:
+
+1. Batch mode to solve predefined input file(s)
+2. Interactive mode that walks the user through
+   all aspects of property definition.
+3. Individual calculations via the standalone utils palette
+`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	//Run: func(cmd *cobra.Command, args []string) { },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -41,8 +45,9 @@ func Execute() {
 }
 
 func addSubcommandPalettes() {
-	rootCmd.AddCommand(interactive.InteractiveCmd)
-	rootCmd.AddCommand(utils.UtilsCmd)
+	//rootCmd.AddCommand(batch.BatchCmd)
+	//rootCmd.AddCommand(interactive.InteractiveCmd)
+	rootCmd.AddCommand(utils.UtilsPal)
 }
 
 func init() {

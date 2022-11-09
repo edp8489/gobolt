@@ -1,3 +1,11 @@
+2022-11-07
+- Start by fleshing out Utils palette
+  - Prompt to set precision when printing calculated values
+  - Area calculator
+  - Pitch, minor diameter calcs for given basic diam, thread pitch, class
+  - Thread shear area
+  - Preload
+
 2022-07-02
 - Refactor component type definitions into individual files
 - Make type definitions private; create public factory methods to return new instances with appropriate default values and derived properties

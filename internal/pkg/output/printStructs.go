@@ -19,6 +19,6 @@ func PrintLoads(l types.Loadset) {
 
 func PrintBolt(b types.Bolt) {
 	fmt.Println("===Bolt Properties===")
-	fmt.Println("Diameter: ", b.D, " [in]")
+	fmt.Println("Diameter: ", b.DIA_MAJ, " [in]")
 	fmt.Println("Material: ", b.Fsu, " [psi] Fsu")
 }

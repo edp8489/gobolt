@@ -5,6 +5,8 @@ Copyright © 2022 Eric Peters <ericdpeters@gmail.com>
 package interactive
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +16,8 @@ var InteractiveCmd = &cobra.Command{
 	Short: "Begin interactive mode for manual joint definition.",
 	Long:  `...`,
 	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Help()
+		//cmd.Help()
+		fmt.Println("Sorry, interactive mode still under development")
 	},
 }
 

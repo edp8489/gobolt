@@ -9,10 +9,11 @@ import (
 )
 
 // utilsCmd represents the utils command
-var UtilsCmd = &cobra.Command{
+var UtilsPal = &cobra.Command{
 	Use:   "utils",
 	Short: "Palette containing various utility functions",
-	Long:  `TBD`,
+	Long: `Utility functions and calculators that can be used independently
+	from full joint definition and margin calculations.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		//fmt.Println("utils called")
 		cmd.Help()
