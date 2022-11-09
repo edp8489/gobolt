@@ -1,7 +1,7 @@
 2022-11-07
 - Start by fleshing out Utils palette
   - Prompt to set precision when printing calculated values
-  - Area calculator
+  - Area calculator (done)
   - Pitch, minor diameter calcs for given basic diam, thread pitch, class
   - Thread shear area
   - Preload
