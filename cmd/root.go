@@ -9,17 +9,20 @@ import (
 	"os"
 
 	"github.com/edp8489/gobolt/cmd/utils"
+	"github.com/manifoldco/promptui"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var cfgFile string
+var version = "0.0.1"
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "gobolt",
-	Short: "A bolted joint strength calculator",
+	Use:     "gobolt",
+	Version: version,
+	Short:   "A bolted joint strength calculator",
 	Long: `
 goBolt is a bolted joint strength calculator.
 
@@ -32,7 +35,17 @@ This application can be run several ways:
 `,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	//Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) {
+		cmd.Help()
+		cmdSel := rootCmdSelect()
+		switch cmdSel {
+		case "demo":
+			fmt.Printf("Sorry, demo program still under development")
+		case "utils":
+			utils.UtilsPal.Help()
+			utils.UtilsPal.Run(cmd, args)
+		}
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -51,7 +64,7 @@ func addSubcommandPalettes() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
+	//cobra.OnInitialize(initConfig)
 	addSubcommandPalettes()
 
 	// Here you will define your flags and configuration settings.
@@ -77,7 +90,7 @@ func initConfig() {
 
 		// Search config in home directory with name ".gobolt" (without extension).
 		viper.AddConfigPath(home)
-		viper.SetConfigType("yaml")
+		viper.SetConfigType("json")
 		viper.SetConfigName(".gobolt")
 	}
 
@@ -87,4 +100,22 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
+}
+
+// TODO promptui select for command palette
+func rootCmdSelect() string {
+	prompt := promptui.Select{
+		Label: "Select a command",
+		Items: []string{"utils", "demo"},
+	}
+
+	_, result, err := prompt.Run()
+
+	if err != nil {
+		fmt.Printf("Prompt failed %v\n", err)
+		//return nil
+	}
+
+	//fmt.Printf("You chose %q\n", result)
+	return result
 }
