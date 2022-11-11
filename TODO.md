@@ -1,10 +1,13 @@
 2022-11-07
 - Start by fleshing out Utils palette
   - Prompt to set precision when printing calculated values
-  - Area calculator (done)
+  - ~~Area calculator~~ (done)
   - Pitch, minor diameter calcs for given basic diam, thread pitch, class
   - Thread shear area
-  - Preload
+  - Preload calcs (in work)
+  - Refactor prompt helpers to public package
+  - Switch from `promptui` library to the better documented `go-survey`
+
 
 2022-07-02
 - Refactor component type definitions into individual files

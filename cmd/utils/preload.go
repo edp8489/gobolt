@@ -7,6 +7,7 @@ package utils
 import (
 	"fmt"
 
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
@@ -20,6 +21,16 @@ var preloadCmd = &cobra.Command{
 		fmt.Println("preload called")
 		//nutSelect()
 		//uncertaintySelect()
+
+		// run prompts using go-survey
+		err := survey.Ask(preload_qs, &preload_answers, survey.WithValidator(survey.Required))
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+		//fmt.Println(preload_answers)
+		fmt.Printf("%s coating: K = %.2f\n", preload_answers.NutFactor, nutFactorMap[preload_answers.NutFactor])
+		fmt.Printf("%s, uncertainty = %.2f\n", preload_answers.Uncertainty, uncertaintyMap[preload_answers.Uncertainty])
 	},
 }
 
@@ -44,6 +55,9 @@ func init() {
 // 3. Nominal torque (float prompt)
 // 4. Application tolerance (float prompt)
 // 5. Nut factor (select)
+// 6. Application method uncertainty (select)
+
+// using promptui
 type SelectKVPair struct {
 	Name  string
 	Value float64
@@ -82,7 +96,6 @@ func nutSelect() int {
 	return resInd
 }
 
-// 6. Application method uncertainty (select)
 var uncertaintyList = []SelectKVPair{
 	{Name: "Torque wrench on unlubricated bolts", Value: 0.35},
 	{Name: "Torque wrench on lubricated bolts", Value: 0.25},
@@ -112,6 +125,84 @@ func uncertaintySelect() int {
 
 	fmt.Printf("You chose %q\n", resStr)
 	return resInd
+}
+
+// prompt definition using go-survey
+var preload_qs = []*survey.Question{
+	{
+		Name: "units",
+		Prompt: &survey.Select{
+			Message: "Select unit system",
+			Options: []string{
+				"imperial (in, lbf, psi)",
+				"metric (mm, N, Pa)",
+			},
+			Default: "",
+		},
+	},
+	{
+		Name:   "diameter",
+		Prompt: &survey.Input{Message: "Input bolt diameter (D) [in or mm]"},
+	},
+	{
+		Name:   "nom_torque",
+		Prompt: &survey.Input{Message: "Input nominal torque (T) [in-lbf or Nm]"},
+	},
+	{
+		Name:   "torque_tol",
+		Prompt: &survey.Input{Message: "Input torque tolerance (+/- t) [in-lbf or Nm]"},
+	},
+	{
+		Name: "nut_factor",
+		Prompt: &survey.Select{
+			Message: "Select thread condition / friction factor (K)",
+			Options: []string{
+				"Black oxide finish",
+				"Zinc plated",
+				"Lubricated",
+				"Cadmium plated",
+				"Anti-seize compound",
+			},
+			Default: "",
+		},
+	},
+	{
+		Name: "uncertainty_factor",
+		Prompt: &survey.Select{
+			Message: "Select torque application method",
+			Options: []string{
+				"Torque wrench on unlubricated bolts",
+				"Torque wrench on lubricated bolts",
+				"Bolt elongation measurement",
+			},
+			Default: "",
+		},
+	},
+}
+
+// define struct to hold answers
+var preload_answers = struct {
+	Units       string  // survey will match the question and field names
+	Diameter    float64 // if the types don't match, survey will convert it
+	Torque      float64 `survey:"nom_torque"`
+	Tolerance   float64 `survey:"torque_tol"`
+	NutFactor   string  `survey:"nut_factor"`
+	Uncertainty string  `survey:"uncertainty_factor"`
+}{}
+
+// create map of select key-value pairs
+var nutFactorMap = map[string]float64{
+	"Black oxide finish":  0.30,
+	"Zinc plated":         0.20,
+	"Lubricated":          0.18,
+	"Cadmium plated":      0.16,
+	"Anti-seize compound": 0.12,
+}
+
+var uncertaintyMap = map[string]float64{
+	"Torque wrench on unlubricated bolts": 0.35,
+	"Torque wrench on lubricated bolts":   0.25,
+	"Bolt elongation measurement":         0.10,
 }
 
 // TODO
