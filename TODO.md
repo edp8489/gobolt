@@ -7,6 +7,7 @@
   - Preload calcs (in work)
   - Refactor prompt helpers to public package
   - Switch from `promptui` library to the better documented `go-survey`
+  - Implement `bcicen/go-units` for unit consistency on inputs
 
 
 2022-07-02

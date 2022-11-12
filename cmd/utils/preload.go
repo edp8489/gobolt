@@ -23,14 +23,25 @@ var preloadCmd = &cobra.Command{
 		//uncertaintySelect()
 
 		// run prompts using go-survey
-		err := survey.Ask(preload_qs, &preload_answers, survey.WithValidator(survey.Required))
+		err := survey.Ask(prompt_qs, &prompt_ans, survey.WithValidator(survey.Required))
 		if err != nil {
 			fmt.Println(err.Error())
 			return
 		}
 		//fmt.Println(preload_answers)
-		fmt.Printf("%s coating: K = %.2f\n", preload_answers.NutFactor, nutFactorMap[preload_answers.NutFactor])
-		fmt.Printf("%s, uncertainty = %.2f\n", preload_answers.Uncertainty, uncertaintyMap[preload_answers.Uncertainty])
+		//fmt.Printf("%s coating: K = %.2f\n", preload_answers.NutFactor, nutFactorMap[preload_answers.NutFactor])
+		//fmt.Printf("%s, uncertainty = %.2f\n", preload_answers.Uncertainty, uncertaintyMap[preload_answers.Uncertainty])
+
+		pre_calc := CalcPreload(prompt_ans.Torque,
+			prompt_ans.Diameter,
+			prompt_ans.Tolerance,
+			nutFactorMap[prompt_ans.NutFactor],
+			uncertaintyMap[prompt_ans.Uncertainty],
+			prompt_ans.Units)
+
+		fmt.Printf("Min preload: %f [%v]\n", pre_calc.Min, pre_calc.Units)
+		fmt.Printf("Nominal preload: %f [%v]\n", pre_calc.Nominal, pre_calc.Units)
+		fmt.Printf("Max preload: %f [%v]\n", pre_calc.Max, pre_calc.Units)
 	},
 }
 
@@ -128,7 +139,7 @@ func uncertaintySelect() int {
 }
 
 // prompt definition using go-survey
-var preload_qs = []*survey.Question{
+var prompt_qs = []*survey.Question{
 	{
 		Name: "units",
 		Prompt: &survey.Select{
@@ -142,20 +153,20 @@ var preload_qs = []*survey.Question{
 	},
 	{
 		Name:   "diameter",
-		Prompt: &survey.Input{Message: "Input bolt diameter (D) [in or mm]"},
+		Prompt: &survey.Input{Message: "Input bolt diameter, D [in or mm]"},
 	},
 	{
 		Name:   "nom_torque",
-		Prompt: &survey.Input{Message: "Input nominal torque (T) [in-lbf or Nm]"},
+		Prompt: &survey.Input{Message: "Input nominal torque, T [in-lbf or Nm]"},
 	},
 	{
 		Name:   "torque_tol",
-		Prompt: &survey.Input{Message: "Input torque tolerance (+/- t) [in-lbf or Nm]"},
+		Prompt: &survey.Input{Message: "Input torque tolerance, +/- t [in-lbf or Nm]"},
 	},
 	{
 		Name: "nut_factor",
 		Prompt: &survey.Select{
-			Message: "Select thread condition / friction factor (K)",
+			Message: "Select thread condition / friction factor, K",
 			Options: []string{
 				"Black oxide finish",
 				"Zinc plated",
@@ -169,7 +180,7 @@ var preload_qs = []*survey.Question{
 	{
 		Name: "uncertainty_factor",
 		Prompt: &survey.Select{
-			Message: "Select torque application method",
+			Message: "Select torque measurement method",
 			Options: []string{
 				"Torque wrench on unlubricated bolts",
 				"Torque wrench on lubricated bolts",
@@ -181,7 +192,7 @@ var preload_qs = []*survey.Question{
 }
 
 // define struct to hold answers
-var preload_answers = struct {
+var prompt_ans = struct {
 	Units       string  // survey will match the question and field names
 	Diameter    float64 // if the types don't match, survey will convert it
 	Torque      float64 `survey:"nom_torque"`
@@ -209,3 +220,30 @@ var uncertaintyMap = map[string]float64{
 // calculate nominal preload using (3) and (5)
 // calculate min and max preload using (4) and (6)
 // print to console
+
+type preload struct {
+	Nominal float64
+	Min     float64
+	Max     float64
+	Units   string
+}
+
+func CalcPreload(tq float64, dia float64, tqtol float64, k float64, u float64, units string) preload {
+	// calculate torque tolerance factors
+	cmin := (tq - tqtol) / tq
+	cmax := (tq + tqtol) / tq
+
+	// calculate nominal preload
+	p0 := tq / (k * dia)
+
+	// calculate minimum/maximum preload
+	p0min := cmin * (1 - u) * p0
+	p0max := cmax * (1 + u) * p0
+
+	return preload{
+		Nominal: p0,
+		Min:     p0min,
+		Max:     p0max,
+		Units:   units,
+	}
+}
