@@ -148,7 +148,7 @@ var prompt_qs = []*survey.Question{
 				"imperial (in, lbf, psi)",
 				"metric (mm, N, Pa)",
 			},
-			Default: "",
+			//Default: "",
 		},
 	},
 	{
@@ -174,7 +174,7 @@ var prompt_qs = []*survey.Question{
 				"Cadmium plated",
 				"Anti-seize compound",
 			},
-			Default: "",
+			//Default: "",
 		},
 	},
 	{
@@ -186,7 +186,7 @@ var prompt_qs = []*survey.Question{
 				"Torque wrench on lubricated bolts",
 				"Bolt elongation measurement",
 			},
-			Default: "",
+			//Default: "",
 		},
 	},
 }
