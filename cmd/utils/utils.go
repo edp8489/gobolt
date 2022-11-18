@@ -23,7 +23,8 @@ var UtilsPal = &cobra.Command{
 		cmdSel := utilsCmdSelect()
 		switch cmdSel {
 		case "preload":
-			fmt.Printf("Sorry, preload program still under development")
+			//fmt.Printf("Sorry, preload program still under development")
+			preloadCmd.Run(cmd, args)
 		case "area":
 			areaCmd.Run(cmd, args)
 		}

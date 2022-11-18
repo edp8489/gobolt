@@ -8,7 +8,6 @@ import (
 	"fmt"
 
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
 )
 
@@ -68,7 +67,7 @@ func init() {
 // 5. Nut factor (select)
 // 6. Application method uncertainty (select)
 
-// using promptui
+/* using promptui
 type SelectKVPair struct {
 	Name  string
 	Value float64
@@ -137,6 +136,7 @@ func uncertaintySelect() int {
 	fmt.Printf("You chose %q\n", resStr)
 	return resInd
 }
+*/
 
 // prompt definition using go-survey
 var prompt_qs = []*survey.Question{
