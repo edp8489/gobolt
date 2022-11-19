@@ -1,11 +1,11 @@
 /*
 Copyright © 2022 NAME HERE <EMAIL ADDRESS>
-
 */
 package utils
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/spf13/cobra"
@@ -233,8 +233,23 @@ func CalcPreload(tq float64, dia float64, tqtol float64, k float64, u float64, u
 	cmin := (tq - tqtol) / tq
 	cmax := (tq + tqtol) / tq
 
+	units = strings.Split(units, " ")[0]
+	if units == "metric" {
+		dia = dia / 1000
+	}
+
+	var tq_units string
+
+	switch units {
+	case "imperial":
+		tq_units = "in-lbf"
+	case "metric":
+		dia = dia / 1000
+		tq_units = "Nm"
+	}
+
 	// calculate nominal preload
-	p0 := tq / (k * dia)
+	var p0 float64 = tq / (k * dia)
 
 	// calculate minimum/maximum preload
 	p0min := cmin * (1 - u) * p0
@@ -244,6 +259,6 @@ func CalcPreload(tq float64, dia float64, tqtol float64, k float64, u float64, u
 		Nominal: p0,
 		Min:     p0min,
 		Max:     p0max,
-		Units:   units,
+		Units:   tq_units,
 	}
 }
