@@ -234,9 +234,6 @@ func CalcPreload(tq float64, dia float64, tqtol float64, k float64, u float64, u
 	cmax := (tq + tqtol) / tq
 
 	units = strings.Split(units, " ")[0]
-	if units == "metric" {
-		dia = dia / 1000
-	}
 
 	var tq_units string
 
