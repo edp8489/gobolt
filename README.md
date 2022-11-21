@@ -50,6 +50,4 @@ Since only a subset of utilities have been implemented, use `gobolt utils` to la
         preload     Calculate preload for a bolted joint
 
 ## References
-- [NASA-TM-106943](https://ntrs.nasa.gov/citations/19960012183) "Preloaded joint analysis methodology for space flight systems" (1995)
-- [NASA-STD-5020](https://standards.nasa.gov/standard/nasa/nasa-std-5020) "Requirements for Threaded Fastening Systems in Spaceflight Hardware"
-- Budynas & Nisbett, "Shigley's Mechanical Engineering Design (8th edition)", 2006, McGraw-Hill, ISBN 978-0073312606 
+See the [Methodology](docs/methodology/index.md) documentation for detailed references of each function. <i>(in work)</i>
