@@ -1,6 +1,5 @@
 /*
 Copyright © 2022 Eric Peters <ericdpeters@gmail.com>
-
 */
 package cmd
 
@@ -8,14 +7,13 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/edp8489/gobolt/cmd/utils"
-	"github.com/manifoldco/promptui"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
-var cfgFile string
+// var cfgFile string
 var version = "0.0.1"
 
 // rootCmd represents the base command when called without any subcommands
@@ -37,7 +35,32 @@ This application can be run several ways:
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Help()
-		cmdSel := rootCmdSelect()
+
+		var prompt_a = struct {
+			Command string
+		}{}
+
+		var prompt_q = []*survey.Question{
+			{
+				Name: "command",
+				Prompt: &survey.Select{
+					Message: "Select a command",
+					Options: []string{
+						"utils",
+						"demo",
+					},
+					//Default: "",
+				},
+			},
+		}
+
+		err := survey.Ask(prompt_q, &prompt_a, survey.WithValidator(survey.Required))
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+
+		cmdSel := prompt_a.Command
+
 		switch cmdSel {
 		case "demo":
 			fmt.Printf("Sorry, demo program still under development")
@@ -71,14 +94,15 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.gobolt.yaml)")
+	//rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.gobolt.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	//rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 // initConfig reads in config file and ENV variables if set.
+/*
 func initConfig() {
 	if cfgFile != "" {
 		// Use config file from the flag.
@@ -101,21 +125,4 @@ func initConfig() {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
 }
-
-// TODO promptui select for command palette
-func rootCmdSelect() string {
-	prompt := promptui.Select{
-		Label: "Select a command",
-		Items: []string{"utils", "demo"},
-	}
-
-	_, result, err := prompt.Run()
-
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
-		//return nil
-	}
-
-	//fmt.Printf("You chose %q\n", result)
-	return result
-}
+*/

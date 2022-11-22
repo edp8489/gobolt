@@ -18,8 +18,6 @@ var preloadCmd = &cobra.Command{
 	Long:  `...`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("preload called")
-		//nutSelect()
-		//uncertaintySelect()
 
 		// run prompts using go-survey
 		err := survey.Ask(prompt_qs, &prompt_ans, survey.WithValidator(survey.Required))
@@ -58,7 +56,6 @@ func init() {
 	// preloadCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-// TODO
 // create promptContent and validationFunc for the following inputs
 // 1. Units (select)
 // 2. Diameter (float prompt)
@@ -66,77 +63,6 @@ func init() {
 // 4. Application tolerance (float prompt)
 // 5. Nut factor (select)
 // 6. Application method uncertainty (select)
-
-/* using promptui
-type SelectKVPair struct {
-	Name  string
-	Value float64
-}
-
-var nutFactorList = []SelectKVPair{
-	{Name: "Black oxide finish", Value: 0.30},
-	{Name: "Zinc plated", Value: 0.20},
-	{Name: "Lubricated", Value: 0.18},
-	{Name: "Cadmium plated", Value: 0.16},
-	{Name: "Anti-seize compound", Value: 0.12},
-}
-
-var nutFacTemplates = &promptui.SelectTemplates{
-	Label:    "{{ . }}",
-	Active:   "{{ .Name }} ({{ .Value }})",
-	Inactive: "{{ .Name | faint }} ({{ .Value | faint }})",
-	Selected: "{{ .Name | bold }} ({{ .Value | bold }})",
-}
-
-func nutSelect() int {
-	prompt := promptui.Select{
-		Label:     "Select bolt condition / lubrication factor",
-		Items:     nutFactorList,
-		Templates: nutFacTemplates,
-	}
-
-	resInd, resStr, err := prompt.Run()
-
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
-		//return nil
-	}
-
-	fmt.Printf("You chose %q\n", resStr)
-	return resInd
-}
-
-var uncertaintyList = []SelectKVPair{
-	{Name: "Torque wrench on unlubricated bolts", Value: 0.35},
-	{Name: "Torque wrench on lubricated bolts", Value: 0.25},
-	{Name: "Bolt elongation measurement", Value: 0.10},
-}
-
-var uncertaintyTemplates = &promptui.SelectTemplates{
-	Label:    "{{ . }}",
-	Active:   "{{ .Name }} ({{ .Value }})",
-	Inactive: "{{ .Name | faint }} ({{ .Value | faint }})",
-	Selected: "{{ .Name | bold }} ({{ .Value | bold }})",
-}
-
-func uncertaintySelect() int {
-	prompt := promptui.Select{
-		Label:     "Torque application method",
-		Items:     uncertaintyList,
-		Templates: uncertaintyTemplates,
-	}
-
-	resInd, resStr, err := prompt.Run()
-
-	if err != nil {
-		fmt.Printf("Prompt failed %v\n", err)
-		//return nil
-	}
-
-	fmt.Printf("You chose %q\n", resStr)
-	return resInd
-}
-*/
 
 // prompt definition using go-survey
 var prompt_qs = []*survey.Question{
@@ -216,7 +142,6 @@ var uncertaintyMap = map[string]float64{
 	"Bolt elongation measurement":         0.10,
 }
 
-// TODO
 // calculate nominal preload using (3) and (5)
 // calculate min and max preload using (4) and (6)
 // print to console
