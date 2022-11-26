@@ -2,7 +2,6 @@ package utils
 
 import (
 	"fmt"
-	"math"
 	"testing"
 
 	"github.com/edp8489/gobolt/internal/pkg/misc"
@@ -27,13 +26,9 @@ func TestCalcPreloadImperial(t *testing.T) {
 
 	got := CalcPreload(80.0, 0.25, 5.0, 0.2, 0.35, "imperial")
 
-	/*
-		if math.Abs(got.Nominal-want.Nominal) > 1 || math.Abs(got.Min-want.Min) > 1 || math.Abs(got.Max-want.Max) > 1 {
-			t.Errorf("got %v, wanted %v", got, want)
-		}
-	*/
-
-	if !misc.PctErrCheck(got.Nominal, want.Nominal, 0.01) || !misc.PctErrCheck(got.Min, want.Min, 0.01) || !misc.PctErrCheck(got.Max, want.Max, 0.01) {
+	if !misc.PctErrCheck(got.Nominal, want.Nominal, 0.01) ||
+		!misc.PctErrCheck(got.Min, want.Min, 0.01) ||
+		!misc.PctErrCheck(got.Max, want.Max, 0.01) {
 		t.Errorf("got %v, wanted %v", got, want)
 	}
 }
@@ -57,7 +52,9 @@ func TestCalcPreloadMetric(t *testing.T) {
 
 	got := CalcPreload(10, 6.0, 0.5, 0.2, 0.35, "metric")
 
-	if math.Abs(got.Nominal-want.Nominal) > 1 || math.Abs(got.Min-want.Min) > 1 || math.Abs(got.Max-want.Max) > 1 {
+	if !misc.PctErrCheck(got.Nominal, want.Nominal, 0.01) ||
+		!misc.PctErrCheck(got.Min, want.Min, 0.01) ||
+		!misc.PctErrCheck(got.Max, want.Max, 0.01) {
 		t.Errorf("got %v, wanted %v", got, want)
 	}
 }
