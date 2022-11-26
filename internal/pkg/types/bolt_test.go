@@ -7,11 +7,11 @@ func TestMinorDiamUN(t *testing.T) {
 	// 0.250-28 UNF 2A
 
 	d := 0.250 // in
-	n = 28 // unitless
+	n = 28     // unitless
 
 	got := MinorDiam_UN(d, n)
 
-	want := 
+	//want :=
 }
 
 // test minor diameter (M thread)
