@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math"
 	"testing"
+
+	"github.com/edp8489/gobolt/internal/pkg/misc"
 )
 
 func TestCalcPreloadImperial(t *testing.T) {
@@ -19,13 +21,19 @@ func TestCalcPreloadImperial(t *testing.T) {
 	want.Nominal = 1600.0
 	want.Max = 2295.0
 	want.Min = 975.0
-	want.Units = "imperial"
+	want.Units = "in-lbf"
 
 	fmt.Println("Testing preload function, imperial units...")
 
-	got := CalcPreload(80.0, 0.25, 5.0, 0.2, 0.35, "in-lbf")
+	got := CalcPreload(80.0, 0.25, 5.0, 0.2, 0.35, "imperial")
 
-	if math.Abs(got.Nominal-want.Nominal) > 1 || math.Abs(got.Min-want.Min) > 1 || math.Abs(got.Max-want.Max) > 1 {
+	/*
+		if math.Abs(got.Nominal-want.Nominal) > 1 || math.Abs(got.Min-want.Min) > 1 || math.Abs(got.Max-want.Max) > 1 {
+			t.Errorf("got %v, wanted %v", got, want)
+		}
+	*/
+
+	if !misc.PctErrCheck(got.Nominal, want.Nominal, 0.01) || !misc.PctErrCheck(got.Min, want.Min, 0.01) || !misc.PctErrCheck(got.Max, want.Max, 0.01) {
 		t.Errorf("got %v, wanted %v", got, want)
 	}
 }
@@ -43,11 +51,11 @@ func TestCalcPreloadMetric(t *testing.T) {
 	want.Nominal = 8333.33
 	want.Max = 11812.5
 	want.Min = 5145.8
-	want.Units = "metric"
+	want.Units = "Nm"
 
 	fmt.Println("Testing preload function, metric units...")
 
-	got := CalcPreload(10, 6.0, 0.5, 0.2, 0.35, "Nm")
+	got := CalcPreload(10, 6.0, 0.5, 0.2, 0.35, "metric")
 
 	if math.Abs(got.Nominal-want.Nominal) > 1 || math.Abs(got.Min-want.Min) > 1 || math.Abs(got.Max-want.Max) > 1 {
 		t.Errorf("got %v, wanted %v", got, want)

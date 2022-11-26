@@ -163,11 +163,14 @@ func CalcPreload(tq float64, dia float64, tqtol float64, k float64, u float64, u
 	var tq_units string
 
 	switch units {
-	case "imperial":
+	case "imperial", "in-lbf":
 		tq_units = "in-lbf"
-	case "metric":
+	case "metric", "Nm":
 		dia = dia / 1000
 		tq_units = "Nm"
+	default:
+		fmt.Println("Error: Incorrect unit system specified")
+		return preload{}
 	}
 
 	// calculate nominal preload
